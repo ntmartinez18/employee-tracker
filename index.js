@@ -10,3 +10,11 @@ const questions = [
         choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add an employee', 'update an employee role'],
     },
 ];
+
+const { answers } = answers => {
+    console.log(answers)
+};
+
+inquirer
+.prompt(questions)
+.then(answers);
