@@ -4,6 +4,7 @@
 A command-line application for a company to track employees
 
 ## Assets
+https://drive.google.com/file/d/19Onvj8jpYQPe20pxoz90cL_eld1MAz9-/view
 
 ## Installation
 Install the "inquirer" package by running the command 'npm install' in the terminal

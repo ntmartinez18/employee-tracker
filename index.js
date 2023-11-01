@@ -105,7 +105,7 @@ function addRole() {
         {
           type: 'input',
           name: 'roleDepartment',
-          message: 'Enter the department for this role:',
+          message: 'Enter the department id for this role:',
         },
       ])
       .then((answers) => {
@@ -113,7 +113,7 @@ function addRole() {
         const salary = answers.salary;
         const roleDepartment = answers.roleDepartment;
         // Insert the role into the database
-        const query = 'INSERT INTO roles (title, salary, department) VALUES (?)';
+        const query = 'INSERT INTO roles (title, salary, department_id) VALUES (?)';
         connection.query(query, [roleName, salary, roleDepartment], (err, res) => {
           if (err) throw err;
           console.log('Role added successfully!');
