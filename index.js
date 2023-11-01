@@ -22,24 +22,19 @@ const questions = [
     },
 ];
 
-// create function to view Departments
-async function viewDepartments() {
-    try {
-      // Query the database to get all departments
-      const query = 'SELECT * FROM department';
-      const [rows] = await connection.promise().query();
-  
-      console.table(rows);
-    } catch (err) {
-      console.error('Error viewing departments:', err);
-    }
+// create function to view all departments
+  async function viewDepartments() {
+    connection.query('SELECT * FROM department', (err, results) => {
+      if (err) {
+        console.error('Error viewing departments:', err);
+      } else {
+        console.log('Departments:', results);
+      }
+    });
   };
 
+// create function to view all roles
   async function viewAllRoles() {
-    // try {
-      // Query the database to get all departments
-    //   const query = 'SELECT * FROM role';
-    //   const [rows] = await connection.promise().query();
       connection.query('SELECT * FROM roles', (err, results) => {
         if (err) {
           console.error('Error viewing roles:', err);
@@ -47,16 +42,23 @@ async function viewDepartments() {
           console.log('Roles:', results);
         }
       });
-    }
-    //   console.table(rows);
-    // } catch (err) {
-    //   console.error('Error viewing roles:', err);
-    // }
-//   };
-  
+    };
+
+    // create function to view all employees
+    async function viewEmployees() {
+        connection.query('SELECT * FROM employee', (err, results) => {
+          if (err) {
+            console.error('Error viewing employees:', err);
+          } else {
+            console.log('Employees:', results);
+          }
+        });
+      };
 
 
 
+
+// create function to add a department
 function addDepartment() {
     // Prompt the user to enter the name of the department
     inquirer
@@ -81,6 +83,8 @@ function addDepartment() {
       });
   };
 
+
+  
 // Call inquirer
 inquirer
 .prompt(questions)
@@ -97,6 +101,7 @@ inquirer
           break;
         case 'view all employees':
           // Code to view all employees
+          viewEmployees();
           break;
         case 'add a department':
           // Code to add a department
