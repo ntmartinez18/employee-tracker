@@ -23,6 +23,7 @@ const questions = [
     },
 ];
 
+
 // created function to view all departments
   async function viewDepartments() {
     connection.query('SELECT * FROM department', (err, results) => {
@@ -31,8 +32,10 @@ const questions = [
       } else {
         console.log('Departments:', results);
       }
+      init();
     });
   };
+
 
 // created function to view all roles
   async function viewAllRoles() {
@@ -42,8 +45,10 @@ const questions = [
         } else {
           console.log('Roles:', results);
         }
+        init();
       });
     };
+
 
     // created function to view all employees
     async function viewEmployees() {
@@ -53,6 +58,7 @@ const questions = [
           } else {
             console.log('Employees:', results);
           }
+          init();
         });
       };
 
@@ -75,9 +81,11 @@ function addDepartment() {
         connection.query(query, [departmentName], (err, res) => {
           if (err) throw err;
           console.log('Department added successfully!');
+          init();
         });
       });
   };
+
 
 // created function to add a role
 function addRole() {
@@ -109,10 +117,10 @@ function addRole() {
         connection.query(query, [roleName, salary, roleDepartment], (err, res) => {
           if (err) throw err;
           console.log('Role added successfully!');
+          init();
         });
       });
   };
-
 
 
   // created function to add an employee
@@ -151,9 +159,11 @@ function addEmployee() {
         connection.query(query, [firstName, lastName, roleID, managerID], (err, res) => {
           if (err) throw err;
           console.log('Employee added successfully!');
+          init();
         });
       });
   };
+
 
 // created function to update employee role
 function updateEmployee() {
@@ -162,31 +172,31 @@ function updateEmployee() {
       .prompt([
         {
           type: 'input',
-          name: 'employeeID',
-          message: 'Enter the name of the employee ID:',
+          name: 'employeeId',
+          message: 'Enter the current role ID:',
         },
         {
             type: 'input',
-            name: 'employeeID',
-            message: 'Enter the name of the employee ID:',
+            name: 'newRoleId',
+            message: 'Enter the new role ID:',
         },
       ])
       .then((answers) => {
-        const departmentName = answers.departmentName;
+        const employeeId = answers.employeeId;
+        const newRoleId = answers.newRoleId;
         // Insert the department into the database
-        const query = `UPDATE employee SET role_id = ${newRoleId} WHERE id = ${employeeId}`;
-        connection.query(query, [departmentName], (err, res) => {
+        const query = `UPDATE employee SET roles_id = ${newRoleId} WHERE id = ${employeeId}`;
+        connection.query(query, [newRoleId, employeeId], (err, res) => {
           if (err) throw err;
           console.log('Employee updated successfully!');
+          init();
         });
       });
   };
 
 
-
-
-
 // Call inquirer
+function init() {
 inquirer
 .prompt(questions)
 .then((answers) => {
@@ -216,14 +226,10 @@ inquirer
           // Code to add an employee
           addEmployee();
           break;
-        case 'update an employee role':
+        default: 'update an employee role'
           // Code to update an employee role
-          break;
-        default:
-          console.log('Invalid choice');
+          updateEmployee();
       }
     });
-
-
-// Example usage
-updateEmployeeRole(1, 2); // Update employee with ID 1 to have role ID 2
+};
+init();
